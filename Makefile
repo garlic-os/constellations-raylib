@@ -1,20 +1,16 @@
-CC = em++
+CC = emcc
 CFLAGS = \
 	-O3 \
 	-Wall \
 	-Werror \
 	-Wno-deprecated \
 	-Wno-parentheses \
-	-Wno-format \
-	-fno-exceptions
-	#-fno-rtti
-STANDARD=-std=c++11
+	-Wno-format
 HEADERS_FOLDER = lib
 HTML_TEMPLATE = src/web/index_template.html
 
 WASMFLAGS = \
 	-O3 \
-	-lembind \
 	--memory-init-file 1 \
 	--closure 1 \
 	--shell-file $(HTML_TEMPLATE) \
@@ -24,16 +20,13 @@ WASMFLAGS = \
 	-s ABORTING_MALLOC=1 \
 	-s EXIT_RUNTIME=0 \
 	-s NO_FILESYSTEM=1 \
-	-s DISABLE_EXCEPTION_CATCHING=2 \
-	-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
-	-s "EXPORTED_FUNCTIONS=['_main', '_malloc', '_free']" \
-	-s "EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
+	-s "EXPORTED_FUNCTIONS=['_main', '_malloc']"
 
 build/index.html: src/driver.o lib/window.o lib/canvas.o
-	$(CC) $(WASMFLAGS) $(STANDARD) lib/window.o lib/canvas.o src/driver.o -o build/index.html
+	$(CC) $(WASMFLAGS) lib/window.o lib/canvas.o src/driver.o -o build/index.html
 	
-src/driver.o: src/driver.cpp
-	$(CC) $(CFLAGS) $(STANDARD) -I $(HEADERS_FOLDER)/ -c -o src/driver.o src/driver.cpp
+src/driver.o: src/driver.c
+	$(CC) $(CFLAGS) -I $(HEADERS_FOLDER)/ -c -o src/driver.o src/driver.c
 
 lib/window.o: lib/window.c
 
