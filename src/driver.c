@@ -1,4 +1,4 @@
-#include <math.h>  // pow, M_PI
+#include <math.h>  // pow, sqrt, M_PI
 #include <stdlib.h>  // rand, srand, RAND_MAX
 #include <stdio.h>  // sprintf
 #include <time.h>  // time
