@@ -11,6 +11,7 @@
 #define PARTICLE_COUNT 115
 #define PARTICLE_SIZE 3
 #define THRESHOLD 250.0
+#define SPEED_MULTIPLIER 2.5
 
 struct Particle {
 	double x;
@@ -49,7 +50,7 @@ double random_y() {
 // negative half the time, and with a bias toward 0.
 // https://www.desmos.com/calculator/7uspuyiuu5
 double random_speed() {
-	return pow(0.5, (5 * rand_01()) + 4) * (rand() % 2 ? 1 : -1);
+	return pow(0.5, (5 * rand_01()) + 4) * (rand() % 2 ? 1 : -1) * SPEED_MULTIPLIER;
 }
 
 
