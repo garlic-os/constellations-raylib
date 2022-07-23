@@ -2,7 +2,6 @@
 #include <stdlib.h>  // rand, srand, RAND_MAX
 #include <stdio.h>  // sprintf
 #include <time.h>  // time
-#include <emscripten.h>  // EM_ASM
 #include <emscripten/html5.h>  // emscripten_set_main_loop, emscripten_console_log
 #include "canvas.h"  // HTMLCanvasElement, CanvasRenderingContext2D,
                      // createCanvas, freeCanvas
