@@ -23,38 +23,10 @@ struct Particle {
 HTMLCanvasElement *canvas;
 CanvasRenderingContext2D *context;
 struct Particle particles[PARTICLE_COUNT];
-// int checked[PARTICLE_COUNT];
-
-
-// const char *on_exit(int _, const void *__, void *___) {
-// 	emscripten_console_log("Simulation stopped.");
-// 	emscripten_console_log("Cleaning up...");
-// 	freeCanvas(canvas);
-// 	freeWindow(Window());
-// 	emscripten_console_log("Done.");
-// 	return "";
-// }
-
-
-void zero_out(int *array, int size) {
-	for (int i = 0; i < size; ++i) {
-		array[i] = 0;
-	}
-}
 
 
 double min(double a, double b) {
 	return a < b ? a : b;
-}
-
-
-int has(int *array, int size, int value) {
-	for (int i = 0; i < size; ++i) {
-		if (array[i] == value) {
-			return 1;
-		}
-	}
-	return 0;
 }
 
 
@@ -122,15 +94,11 @@ void animate() {
 	// goes to #000000 otherwise.
 	context->setFillStyle(context, "#e5e3df");
 
-	// zero_out(checked, PARTICLE_COUNT);
-
 	// Draw the particles and the lines between them.
 	for (int i = 0; i < PARTICLE_COUNT; ++i) {
-		// checked[i] = i;
 		draw_particle(particles[i].x, particles[i].y);
 
 		for (int j = i + 1; j < PARTICLE_COUNT; ++j) {
-			// if (has(checked, PARTICLE_COUNT, j)) continue;
 			line_between(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
 		}
 
@@ -168,10 +136,6 @@ int main() {
 	context = canvas->getContext(canvas, "2d");
 	canvas->setWidth(canvas, Window()->getInnerWidth());
 	canvas->setHeight(canvas, Window()->getInnerHeight());
-
-	// EM_ASM({
-	// 	console.emscripten_console_log("Canvas dimensions: " + $0 + "x" + $1);
-	// }, canvas->getWidth(canvas), canvas->getHeight(canvas));
 	emscripten_console_log("Initialized canvas.");
 
 	// Populate particle array with random values.
@@ -183,10 +147,6 @@ int main() {
 		particles[i].vy = random_speed();
 	}
 	emscripten_console_log("Generated particles.");
-
-	// emscripten_console_log("Setting beforeunload handler...");
-	// emscripten_set_beforeunload_callback(NULL, on_exit);
-	// emscripten_console_log("Set beforeunload handler.");
 
 	emscripten_console_log("Starting simulation.");
 	emscripten_set_main_loop(&animate, 0, 1);
