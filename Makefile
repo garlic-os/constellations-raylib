@@ -7,7 +7,7 @@ CFLAGS = \
 	-Wno-parentheses \
 	-Wno-format
 HEADERS_FOLDER = lib
-HTML_TEMPLATE = src/web/index_template.html
+HTML_TEMPLATE = src/index_template.html
 
 WASMFLAGS = \
 	-O3 \
